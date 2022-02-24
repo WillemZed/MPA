@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Genre as ModelsGenre;
+use App\Models\Artist;
 use Illuminate\Http\Request;
 
-class GenreController extends Controller
+class ArtistController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class GenreController extends Controller
      */
     public function index()
     {
-        return view('index');
+        return view('artist');
     }
 
     /**
@@ -44,34 +44,22 @@ class GenreController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show(Artist $artist)
     {
-        return view('genres', [
-            "genres" => ModelsGenre::all()
-        ]);
-
-
-
-    }
-
-    public function showSongs(ModelsGenre $genres)
-    {
-        return view('songs', [
-            "songs" => $genres->songs
+        return view('artist', [
+            'artist' => $artist
         ]);
     }
+
     /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(ModelsGenre $genres)
+    public function edit($id)
     {
-
-        return view('crud.edit', [
-            'edit' => $genres
-        ]);
+        //
     }
 
     /**
@@ -94,10 +82,6 @@ class GenreController extends Controller
      */
     public function destroy($id)
     {
-        $genres = ModelsGenre::find($id);
-
-        return view('genre.destroy', [
-            'genre' => $genres
-        ]);
+        //
     }
 }

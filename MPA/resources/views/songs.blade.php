@@ -6,7 +6,9 @@
             <br>
             <p>{{$song->genre->name}}</p>
             <br>
-            <a href="artist/{{$song->artist->slug}}">{{$song->artist->name}}</a></p>
+            <p><a href="artist/{{$song->artist->slug}}">{{$song->artist->name}}</a></p>
+            <br>
+            <p><a href="song/details/{{$song->slug}}">details</a></p>
         </div>
     @endforeach
     <a href="/genres">Go back to genres</a>

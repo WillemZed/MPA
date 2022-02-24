@@ -2,19 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Genre as ModelsGenre;
+use App\Models\Artist;
 use Illuminate\Http\Request;
+use App\Models\Song as ModelsSong;
 
-class GenreController extends Controller
+
+class SongController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(ModelsSong $songs)
     {
-        return view('index');
+        return view('songs', [
+            "songs" => $songs::with('genre', 'artist')->get()
+        ]);
     }
 
     /**
@@ -44,33 +48,24 @@ class GenreController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show(ModelsSong $songs)
     {
-        return view('genres', [
-            "genres" => ModelsGenre::all()
+        return view('song-details', [
+            "song" => $songs
         ]);
-
-
 
     }
 
-    public function showSongs(ModelsGenre $genres)
-    {
-        return view('songs', [
-            "songs" => $genres->songs
-        ]);
-    }
     /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(ModelsGenre $genres)
+    public function edit(ModelsSong $song)
     {
-
-        return view('crud.edit', [
-            'edit' => $genres
+        return view('song-crud.edit', [
+            "edit" => $song
         ]);
     }
 
@@ -81,9 +76,16 @@ class GenreController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ModelsSong $song)
     {
-        //
+        $song->update([
+            'title' => request('title'),
+            'artist_id' => request('artists'),
+            'genre_id' =>request('genres')
+        ]);
+
+
+        return redirect('songs');
     }
 
     /**
@@ -92,12 +94,10 @@ class GenreController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(ModelsSong $song)
     {
-        $genres = ModelsGenre::find($id);
+        $song->delete();
 
-        return view('genre.destroy', [
-            'genre' => $genres
-        ]);
+        return redirect('songs');
     }
 }

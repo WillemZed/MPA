@@ -71,36 +71,42 @@ class DatabaseSeeder extends Seeder
 
         Song::create([
             'title' => 'Lemon',
+            'slug' => 'lemon',
             'artist_id' => $kenshi->id,
             'genre_id' => $jpop->id
         ]);
 
         Song::create([
             'title' => 'Dynamite',
+            'slug' => 'dynamite',
             'artist_id' => $bts->id,
             'genre_id' => $kpop->id
         ]);
 
         Song::create([
             'title' => 'Dramaturgy',
+            'slug' => 'dramaturgy',
             'artist_id' => $eve->id,
             'genre_id' => $rock->id
         ]);
 
         Song::create([
             'title' => 'Fly me to the moon',
+            'slug' => 'fly-me-to-the-moon',
             'artist_id' => $sinatra->id,
             'genre_id' => $jazz->id
         ]);
 
         Song::create([
             'title' => 'The rumbling',
+            'slug' => 'the-rumbling',
             'artist_id' => $sim->id,
             'genre_id' => $heavyMetal->id
         ]);
 
         Song::create([
             'title' => 'Paprika',
+            'slug' => 'paprika',
             'artist_id' => $kenshi->id,
             'genre_id' => $jpop->id
         ]);

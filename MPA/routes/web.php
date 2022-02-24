@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\ArtistController;
 use App\Http\Controllers\GenreController;
+use App\Http\Controllers\SongController;
+
 use App\Models\Artist;
 use App\Models\Genre;
 use app\Models\Playlist;
@@ -20,29 +23,26 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('/', [GenreController::class, 'index']);
 
-    return view('index');
-});
+Route::get('genres', [GenreController::class, 'show']);
 
-Route::get('genres', function () {
-    return view('genres', [
-        "genres" => Genre::all()
-    ]);
-});
+Route::get('songs', [SongController::class, 'index']);
 
-Route::get('songs', function () {
-    return view('songs', [
-        "songs" => Song::all()
-    ]);
-});
+Route::get('artist/{artist:slug}', [ArtistController::class, 'show']);
 
-Route::get('genres/{genres:slug}', function (Genre $genres) {
-    return view('songs', [
-        "songs" => $genres->songs
-    ]);
-});
+Route::get('song/details/{songs:slug}', [SongController::class, 'show']);
+
+Route::get('genres/{genres:slug}', [GenreController::class, 'showSongs']);
+
+Route::get('genre/edit/{genres:slug}', [GenreController::class, 'edit']);
+Route::get('song/details/{song:slug}/edit', [SongController::class, 'edit']);
 
 
-Route::resource('genre', GenreController::class);
+Route::put('song/details/{song:slug}/edit/{edit}', [SongController::class, 'update']);
+Route::delete('song/details/delete/{song}', [SongController::class, 'destroy']);
+
+//Route::resource('genre', GenreController::class);
+
+
 

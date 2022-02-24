@@ -18,6 +18,7 @@ class Songs extends Migration
             $table->foreignId('genre_id');
             $table->foreignId('artist_id');
             $table->string('title');
+            $table->string('slug')->unique();
             $table->timestamps();
         });
     }
