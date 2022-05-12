@@ -31,9 +31,15 @@ class SessionPlaylist extends Model
 
     }
     public function saveToSession() {
-        Session::put('playlist', $this->items);
-        Session::save();        // when using dd, session is not saved, therefore this manual save
-    }
+        $currentSession = $this->items;
+        $newSession = array_unique($currentSession);
+        if(count($currentSession) != count($newSession)) {
+            return redirect("/songs")->with("status", "Cannot have duplicate entries");
+        } else {
+            Session::put('playlist', $newSession);
+            Session::save();        // when using dd, session is not saved, therefore this manual save
+        }
+        }
 
     public function getAll() {
         return $this->items;
@@ -62,9 +68,6 @@ class SessionPlaylist extends Model
 
     public function checkDuplicateInSession() {
 
-        // if (!in_array($this->items, $recents)) {
-        //     $recents[] = $product->id;
-        // }
     }
 
 }
